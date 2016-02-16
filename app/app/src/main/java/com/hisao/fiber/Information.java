@@ -7,6 +7,11 @@ import java.util.ArrayList;
  */
 public class Information {
 
+    /**
+     * Get your own API_KEY
+     */
+    public static String API_KEY = "e95a21621a1865bcbae3bee89c4d4f84";
+
     /*
     TODO add non mandatory parameters
      */
@@ -85,6 +90,7 @@ public class Information {
     private boolean google_ad_id_limited_tracking_enabled;
 
     public Information() {
+        this.setApi_key(Information.API_KEY);
     }
 
     public boolean isGoogle_ad_id_limited_tracking_enabled() {
@@ -224,5 +230,4 @@ public class Information {
             return false;
         return true;
     }
-
 }

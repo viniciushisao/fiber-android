@@ -1,140 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.hisao.fiber.MainActivity">
 
-        <TextView
-            android:id="@+id/txtFormat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="format" />
-
-        <Spinner
-            android:id="@+id/spnFormat"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/format_array"
-            android:layout_below="@id/txtFormat"/>
-
-        <TextView
-            android:id="@+id/txtAppId"
-            android:imeOptions="actionNext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="appId"
-            android:layout_below="@+id/spnFormat"/>
-
-        <EditText
-            android:id="@+id/edAppId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_below="@id/txtAppId"/>
-
-        <TextView
-            android:id="@+id/txtUid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="uid"
-            android:layout_below="@+id/edAppId"/>
-
-        <EditText
-            android:id="@+id/edUid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_below="@id/txtUid"/>
-
-        <TextView
-            android:id="@+id/txtLocale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="locale"
-            android:layout_below="@+id/edUid"/>
-
-        <EditText
-            android:id="@+id/edLocale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_below="@id/txtLocale"/>
-
-        <TextView
-            android:id="@+id/txtOsVersion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="os_version"
-            android:layout_below="@+id/edLocale"/>
-
-        <EditText
-            android:id="@+id/edOsVersion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_below="@id/txtOsVersion"/>
-
-        <TextView
-            android:id="@+id/txtTimestamp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="timestamp"
-            android:layout_below="@id/edOsVersion"/>
-
-        <EditText
-            android:id="@+id/edTimestamp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_below="@id/txtTimestamp"/>
-
-        <TextView
-            android:id="@+id/txtGoogle_ad_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="google_ad_id"
-            android:layout_below="@id/edTimestamp"/>
-
-        <EditText
-            android:id="@+id/edGoogle_ad_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_below="@id/txtGoogle_ad_id"/>
-
-        <TextView
-            android:id="@+id/txtGoogle_ad_id_limited_tracking_enabled"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="google_ad_id"
-            android:layout_below="@id/edGoogle_ad_id"/>
-
-        <Spinner
-            android:id="@+id/spntxtGoogle_ad_id_limited_tracking_enabled"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/boolean_value"
-            android:layout_below="@id/txtGoogle_ad_id_limited_tracking_enabled"
-            >
-
-        </Spinner>
-
-        <Button
-            android:id="@+id/btnRetrieve"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Retrieve Fiber Data"
-            android:layout_below="@id/spntxtGoogle_ad_id_limited_tracking_enabled"/>
+    <FrameLayout
+        android:id="@+id/fragment_information"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     </RelativeLayout>
-</ScrollView>
