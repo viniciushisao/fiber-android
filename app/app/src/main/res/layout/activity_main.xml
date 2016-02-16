@@ -20,11 +20,11 @@
             android:layout_height="wrap_content"
             android:text="format" />
 
-        <EditText
-            android:id="@+id/edFormat"
-            android:layout_width="match_parent"
+        <Spinner
+            android:id="@+id/spnFormat"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:entries="@array/format_array"
             android:layout_below="@id/txtFormat"/>
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="appId"
-            android:layout_below="@+id/edFormat"/>
+            android:layout_below="@+id/spnFormat"/>
 
         <EditText
             android:id="@+id/edAppId"
@@ -119,19 +119,22 @@
             android:text="google_ad_id"
             android:layout_below="@id/edGoogle_ad_id"/>
 
-        <EditText
-            android:id="@+id/edGoogle_ad_id_limited_tracking_enabled"
+        <Spinner
+            android:id="@+id/spntxtGoogle_ad_id_limited_tracking_enabled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_below="@id/txtGoogle_ad_id_limited_tracking_enabled"/>
+            android:entries="@array/boolean_value"
+            android:layout_below="@id/txtGoogle_ad_id_limited_tracking_enabled"
+            >
+
+        </Spinner>
 
         <Button
             android:id="@+id/btnRetrieve"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Retrieve Fiber Data"
-            android:layout_below="@id/edGoogle_ad_id_limited_tracking_enabled"/>
+            android:layout_below="@id/spntxtGoogle_ad_id_limited_tracking_enabled"/>
 
     </RelativeLayout>
 </ScrollView>

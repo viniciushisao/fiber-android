@@ -103,12 +103,30 @@ public class Information {
         this.google_ad_id = google_ad_id;
     }
 
-    public String getHashkey() {
-        return hashkey;
-    }
 
-    public void setHashkey(String hashkey) {
-        this.hashkey = hashkey;
+    /**
+     *  1 Get all request parameters and their values (except hashkey)
+     *  2 Order theses pairs alphabetically by parameter name
+     *  3 Concatenate all pairs using = between key and value and & between the pairs.
+     *  4 Concatenate the resulting string with & and the API Key handed out to you by Fyber.
+     *  5 Hash the whole resulting string, using SHA1. The resulting hashkey is then appended to the request as a separate
+     */
+    public String getHashkey() {
+
+        if (this.hashkey == null || this.hashkey.isEmpty()){
+
+            // adding alphabetical order
+            hashkey = APPID + "=" + getAppid() + "&" +
+                    FORMAT + "=" + getFormat() + "&" +
+                    GOOGLE_AD_ID + "=" + getGoogle_ad_id() + "&" +
+                    GOOGLE_AD_ID_LIMITED_TRACKING_ENABLE + "=" + isGoogle_ad_id_limited_tracking_enabled() + "&" +
+                    LOCALE + "=" + getLocale() + "&" +
+                    OS_VERSION + "=" + getLocale() + "&" +
+                    TIMESTAMP + "=" + getTimestamp() + "&" +
+                    UID + "=" + getUid() + "&" +
+                    getApi_key();
+        }
+        return hashkey;
     }
 
     public String getTimestamp() {
@@ -163,29 +181,6 @@ public class Information {
         this.api_key = api_key;
     }
 
-    /**
-     *  1 Get all request parameters and their values (except hashkey)
-     *  2 Order theses pairs alphabetically by parameter name
-     *  3 Concatenate all pairs using = between key and value and & between the pairs.
-     *  4 Concatenate the resulting string with & and the API Key handed out to you by Fyber.
-     *  5 Hash the whole resulting string, using SHA1. The resulting hashkey is then appended to the request as a separate
-     */
-    private String getParamsAndValues (){
-
-        // adding alphabetical order
-        String ret = APPID + "=" + getAppid() + "&" +
-        FORMAT + "=" + getFormat() + "&" +
-        GOOGLE_AD_ID + "=" + getGoogle_ad_id() + "&" +
-        GOOGLE_AD_ID_LIMITED_TRACKING_ENABLE + "=" + isGoogle_ad_id_limited_tracking_enabled() + "&" +
-        LOCALE + "=" + getLocale() + "&" +
-        OS_VERSION + "=" + getLocale() + "&" +
-        TIMESTAMP + "=" + getTimestamp() + "&" +
-        UID + "=" + getUid() + "&" +
-        getApi_key();
-
-        return ret;
-    }
-
     // TODO check all the validators
 
     public static boolean isValidFormat(String format){
@@ -230,9 +225,4 @@ public class Information {
         return true;
     }
 
-    public static boolean isValidGoogle_ad_id_limited_tracking_enabled(String google_ad_id_limited_tracking_enabled){
-        if (google_ad_id_limited_tracking_enabled == null || google_ad_id_limited_tracking_enabled.isEmpty())
-            return false;
-        return true;
-    }
 }
