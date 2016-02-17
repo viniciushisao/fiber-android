@@ -31,7 +31,7 @@ public class Information {
      * As soon as this feature is turned on for your application, Fyber will provide you
      * with an API key, that you will need for all requests. Please don’t share this API key with
      * any third party. It is specific to you and your application. You will be personally
-     * responsible for the use of the Fyber Mobile Offer API key.
+     * responsible for the use of the Fyber Mobile Offers API key.
      */
     private String api_key;
 

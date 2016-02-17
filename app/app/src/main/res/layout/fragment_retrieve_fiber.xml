@@ -5,10 +5,25 @@
     android:layout_height="match_parent"
     tools:context="com.hisao.fiber.RetrieveFiberFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ProgressBar
+        android:id="@+id/pbMain"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminate="true" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:visibility="visible"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="#FF0000"
+            android:text="TESTING THE ERROR MESSAGE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
 
 </FrameLayout>
