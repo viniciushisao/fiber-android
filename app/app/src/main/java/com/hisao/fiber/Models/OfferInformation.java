@@ -13,16 +13,10 @@ public class OfferInformation {
 //    - language
 //    - support_url
 
-    @SerializedName("app_name")
-    private String mAppName;
-    @SerializedName("appid")
-    private String mAppId;
-    @SerializedName("virtual_currency")
-    private String mVirtualCurrency;
-    @SerializedName("country")
-    private String mCountry;
-    @SerializedName("language")
-    private String mLanguage;
-    @SerializedName("support_url")
-    private String mSupportUrl;
+    private String app_name;
+    private String appid;
+    private String virtual_currency;
+    private String country;
+    private String language;
+    private String support_url;
 }

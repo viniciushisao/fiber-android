@@ -4,9 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.hisao.fiber.Models.OfferError;
+import com.hisao.fiber.Models.OfferResponse;
+
+import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 
 /**
@@ -63,8 +77,45 @@ public class RetrieveFiberFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_retrieve_fiber, container, false);
+
+
+        View inflate = inflater.inflate(R.layout.fragment_retrieve_fiber, container, false);
+        final ProgressBar pbMain= (ProgressBar) inflate.findViewById(R.id.pbMain);
+        final TextView txtError = (TextView) inflate.findViewById(R.id.txtError);
+
+        pbMain.setVisibility(View.VISIBLE);
+        txtError.setVisibility(View.GONE);
+
+
+        //final List<OfferResponse> offerResponseList = new List<OfferResponse>();
+        RestClient.OfferInterface service = RestClient.getClient();
+        Call<OfferResponse> call = service.getOffer("tom");
+        call.enqueue(new Callback<OfferResponse>() {
+            @Override
+            public void onResponse(Response<OfferResponse> response) {
+                if (response.isSuccess()) {
+                    // request successful (status code 200, 201)
+                    OfferResponse result = response.body();
+
+                    Log.d("LOG", "RetrieveFiberFragment:onResponse " + result.toString());
+
+                    //offerResponseList = result.getItems();
+                    //Log.d("MainActivity", "Items = " + Users.size());
+                    //adapter = new UserAdapter(MainActivity.this, Users);
+                    //listView.setAdapter(adapter);
+                } else {
+                    Log.d("LOG", "RetrieveFiberFragment:onResponse error");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("LOG", "RetrieveFiberFragment:onFailure" + t.toString());
+            }
+        });
+
+
+        return inflate;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

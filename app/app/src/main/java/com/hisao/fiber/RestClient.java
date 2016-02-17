@@ -1,5 +1,8 @@
 package com.hisao.fiber;
 
+        import android.util.Log;
+
+        import com.hisao.fiber.Models.OfferError;
         import com.hisao.fiber.Models.OfferResponse;
         import com.squareup.okhttp.Interceptor;
         import com.squareup.okhttp.OkHttpClient;
@@ -20,11 +23,11 @@ package com.hisao.fiber;
  */
 public class RestClient {
 
-    private static GitApiInterface gitApiInterface;
+    private static OfferInterface offerInterface;
     private static String baseUrl = "http://api.fyber.com/";
 
-    public static GitApiInterface getClient() {
-        if (gitApiInterface == null) {
+    public static OfferInterface getClient() {
+        if (offerInterface == null) {
 
             OkHttpClient okClient = new OkHttpClient();
             okClient.interceptors().add(new Interceptor() {
@@ -41,12 +44,12 @@ public class RestClient {
                     .client(okClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-            gitApiInterface = client.create(GitApiInterface.class);
+            offerInterface = client.create(OfferInterface.class);
         }
-        return gitApiInterface;
+        return offerInterface;
     }
 
-    public interface GitApiInterface {
+    public interface OfferInterface {
 
         //  @Headers("User-Agent: Retrofit2.0Tutorial-App")
         @GET("/feed/v1/offers.json")

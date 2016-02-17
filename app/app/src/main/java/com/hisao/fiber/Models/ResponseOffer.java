@@ -1,9 +1,5 @@
 package com.hisao.fiber.Models;
 
-import com.google.gson.annotations.SerializedName;
-import com.hisao.fiber.Models.OfferThumbnail;
-import com.hisao.fiber.Models.OfferTypes;
-
 import java.util.List;
 
 /**
@@ -21,32 +17,13 @@ public class ResponseOffer {
 //    - payout
 //    - time_to_payout (class)
 
-    @SerializedName("link")
-    private String mLink;
-
-    @SerializedName("title")
-    private String mTitle;
-
-    @SerializedName("offer_id")
-    private String mOfferId;
-
-    @SerializedName("teaser")
-    private String mTeaer;
-
-    @SerializedName("required_actions")
-    private String mRequiredActions;
-
-    @SerializedName("thumbnail")
-    private OfferThumbnail mThumbnail;
-
-    @SerializedName("offer_types")
-    private List<OfferTypes> mOfferTypes;
-
-    @SerializedName("payout")
-    private String mPayout;
-
-    @SerializedName("time_to_payout")
-    private String mTimeToPayout;
-
-
+    private String link;
+    private String title;
+    private String offer_id;
+    private String teaser;
+    private String required_actions;
+    private OfferThumbnail thumbnail;
+    private List<OfferTypes> offer_types;
+    private String payout;
+    private OfferTimeToPayout time_to_payout;
 }
