@@ -1,18 +1,14 @@
-package com.hisao.fiber;
+package com.hisao.fiber.UI;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.location.SettingInjectorService;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+
+import com.hisao.fiber.Information;
+import com.hisao.fiber.R;
+import com.hisao.fiber.UI.InformationFragment;
+import com.hisao.fiber.UI.RetrieveFiberFragment;
 
 public class MainActivity extends AppCompatActivity implements InformationFragment.OnFragmentInteractionListener , RetrieveFiberFragment.OnFragmentInteractionListener {
 
@@ -31,9 +27,8 @@ public class MainActivity extends AppCompatActivity implements InformationFragme
 
     @Override
     public void onFragmentInteraction(Information information) {
-        Log.d("VINICIUS", information.getHashkey());
-
         RetrieveFiberFragment newFragment = new RetrieveFiberFragment();
+        newFragment.setInformation(information);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_information, newFragment);
         transaction.addToBackStack(null);

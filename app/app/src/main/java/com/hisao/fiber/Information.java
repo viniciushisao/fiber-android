@@ -1,39 +1,18 @@
 package com.hisao.fiber;
 
-import java.util.ArrayList;
+import android.util.Log;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by suzukivi on 15/02/2016.
  */
 public class Information {
 
-    /**
-     * Get your own API_KEY
-     */
-    public static String API_KEY = "e95a21621a1865bcbae3bee89c4d4f84";
-
     /*
     TODO add non mandatory parameters
      */
-
-    public static String FORMAT = "format";
-    public static String APPID = "appid";
-    public static String UID = "uid";
-    public static String LOCALE = "locale";
-    public static String OS_VERSION = "os_version";
-    public static String TIMESTAMP = "timestamp";
-    public static String HASHKEY = "hashkey";
-    public static String GOOGLE_AD_ID = "google_ad_id";
-    public static String GOOGLE_AD_ID_LIMITED_TRACKING_ENABLE = "google_ad_id_limited_tracking_enabled";
-
-
-    /**
-     * As soon as this feature is turned on for your application, Fyber will provide you
-     * with an API key, that you will need for all requests. Please don’t share this API key with
-     * any third party. It is specific to you and your application. You will be personally
-     * responsible for the use of the Fyber Mobile Offers API key.
-     */
-    private String api_key;
 
     /**
      *The response format ( lower case), selected by the ‘extension’ after ‘offers’.
@@ -89,10 +68,6 @@ public class Information {
      */
     private boolean google_ad_id_limited_tracking_enabled;
 
-    public Information() {
-        this.setApi_key(Information.API_KEY);
-    }
-
     public boolean isGoogle_ad_id_limited_tracking_enabled() {
         return google_ad_id_limited_tracking_enabled;
     }
@@ -121,18 +96,49 @@ public class Information {
 
         if (this.hashkey == null || this.hashkey.isEmpty()){
 
-            // adding alphabetical order
-            hashkey = APPID + "=" + getAppid() + "&" +
-                    FORMAT + "=" + getFormat() + "&" +
-                    GOOGLE_AD_ID + "=" + getGoogle_ad_id() + "&" +
-                    GOOGLE_AD_ID_LIMITED_TRACKING_ENABLE + "=" + isGoogle_ad_id_limited_tracking_enabled() + "&" +
-                    LOCALE + "=" + getLocale() + "&" +
-                    OS_VERSION + "=" + getLocale() + "&" +
-                    TIMESTAMP + "=" + getTimestamp() + "&" +
-                    UID + "=" + getUid() + "&" +
-                    getApi_key();
+            hashkey = ApplicationConstants.APPID + "=" + getAppid() + "&" +
+                    ApplicationConstants.FORMAT + "=" + getFormat() + "&" +
+                    ApplicationConstants.GOOGLE_AD_ID + "=" + getGoogle_ad_id() + "&" +
+                    ApplicationConstants.GOOGLE_AD_ID_LIMITED_TRACKING_ENABLE + "=" + isGoogle_ad_id_limited_tracking_enabled() + "&" +
+                    ApplicationConstants.LOCALE + "=" + getLocale() + "&" +
+                    ApplicationConstants.OS_VERSION + "=" + getLocale() + "&" +
+                    ApplicationConstants.TIMESTAMP + "=" + getTimestamp() + "&" +
+                    ApplicationConstants.UID + "=" + getUid() + "&" +
+                    ApplicationConstants.API_KEY;
+
+            try {
+                hashkey = AeSimpleSHA1.SHA1(hashkey);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
         return hashkey;
+    }
+    /**
+     * Sample:
+     * http://api.fyber.com/feed/v1/offers.json?appid=[APP_ID]&uid=[USER_ID]&ip=[IP_ADDRESS]&
+     * locale=[LOCALE]&device_id=[DEVICE_ID]&ps_time=[TIMESTAMP]&pub0=[CUSTOM]&
+     * timestamp=[UNIX_TIMESTAMP]&offer_types=[OFFER_TYPES]&google_ad_id=[GAID]&
+     * google_ad_id_limited_tracking_enabled=[GAID ENABLED]&hashkey=[HASHKEY]
+     */
+
+    public String getParams(){
+
+        String ret = ApplicationConstants.APPID + "=" + getAppid() + "&" +
+                ApplicationConstants.FORMAT + "=" + getFormat() + "&" +
+                ApplicationConstants.GOOGLE_AD_ID + "=" + getGoogle_ad_id() + "&" +
+                ApplicationConstants.GOOGLE_AD_ID_LIMITED_TRACKING_ENABLE + "=" + isGoogle_ad_id_limited_tracking_enabled() + "&" +
+                ApplicationConstants.LOCALE + "=" + getLocale() + "&" +
+                ApplicationConstants.OS_VERSION + "=" + getLocale() + "&" +
+                ApplicationConstants.TIMESTAMP + "=" + getTimestamp() + "&" +
+                ApplicationConstants.UID + "=" + getUid() + "&" +
+                ApplicationConstants.HASHKEY + "=" + getHashkey();
+
+
+        Log.d("LOG", "Information:getParams " + ret);
+        return ret;
     }
 
     public String getTimestamp() {
@@ -179,14 +185,6 @@ public class Information {
         this.appid = appid;
     }
 
-    public String getApi_key() {
-        return api_key;
-    }
-
-    public void setApi_key(String api_key) {
-        this.api_key = api_key;
-    }
-
     // TODO check all the validators
 
     public static boolean isValidFormat(String format){
@@ -229,5 +227,9 @@ public class Information {
         if (google_ad_id == null || google_ad_id.isEmpty())
             return false;
         return true;
+    }
+
+    public String getOs_version() {
+        return os_version;
     }
 }

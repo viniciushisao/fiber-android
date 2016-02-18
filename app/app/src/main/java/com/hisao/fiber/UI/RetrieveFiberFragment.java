@@ -1,4 +1,4 @@
-package com.hisao.fiber;
+package com.hisao.fiber.UI;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,19 +8,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hisao.fiber.Models.OfferError;
+import com.hisao.fiber.Information;
 import com.hisao.fiber.Models.OfferResponse;
+import com.hisao.fiber.Models.OfferResponseOffers;
+import com.hisao.fiber.R;
+import com.hisao.fiber.RestClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
-import retrofit.Retrofit;
 
 
 /**
@@ -40,9 +43,11 @@ public class RetrieveFiberFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Information information;
 
     private OnFragmentInteractionListener mListener;
 
+    private OffersAdapter offersAdapter;
     public RetrieveFiberFragment() {
         // Required empty public constructor
     }
@@ -82,35 +87,65 @@ public class RetrieveFiberFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_retrieve_fiber, container, false);
         final ProgressBar pbMain= (ProgressBar) inflate.findViewById(R.id.pbMain);
         final TextView txtError = (TextView) inflate.findViewById(R.id.txtError);
+        final ListView lstOffers = (ListView) inflate.findViewById(R.id.lstOffers);
 
         pbMain.setVisibility(View.VISIBLE);
         txtError.setVisibility(View.GONE);
 
-
-        //final List<OfferResponse> offerResponseList = new List<OfferResponse>();
         RestClient.OfferInterface service = RestClient.getClient();
-        Call<OfferResponse> call = service.getOffer("tom");
+//        @Query("format") String format,
+//        @Query("appid") Integer appid,
+//        @Query("uid") String uid,
+//        @Query("locale") String locale,
+//        @Query("os_version") String os_version,
+//        @Query("timestamp") Long timestamp,
+//        @Query("hashkey") String hashkey,
+//        @Query("google_ad_id") String google_ad_id,
+//        @Query("google_ad_id_limited_tracking_enabled") Boolean google_ad_id_limited_tracking_enabled);
+
+        Call<OfferResponse> call = service.getOffers(information.getFormat(),
+                information.getAppid(),
+                information.getUid(),
+                information.getLocale(),
+                information.getOs_version(),
+                information.getTimestamp(),
+                information.getHashkey(),
+                information.getGoogle_ad_id(),
+                information.isGoogle_ad_id_limited_tracking_enabled()
+                );
         call.enqueue(new Callback<OfferResponse>() {
             @Override
             public void onResponse(Response<OfferResponse> response) {
                 if (response.isSuccess()) {
                     // request successful (status code 200, 201)
                     OfferResponse result = response.body();
+                    List<OfferResponseOffers> offerResponseOffersList = new ArrayList<OfferResponseOffers>();
+                    offerResponseOffersList = result.getOffers();
 
-                    Log.d("LOG", "RetrieveFiberFragment:onResponse " + result.toString());
+                    if (offerResponseOffersList.size() == 0){
+                        txtError.setText("NOTHING TO SHOW");
+                        pbMain.setVisibility(View.GONE);
+                        txtError.setVisibility(View.VISIBLE);
+                        lstOffers.setVisibility(View.GONE);
+                    }else {
+                        offersAdapter = new OffersAdapter(offerResponseOffersList, getContext());
+                        lstOffers.setAdapter(offersAdapter);
 
-                    //offerResponseList = result.getItems();
-                    //Log.d("MainActivity", "Items = " + Users.size());
-                    //adapter = new UserAdapter(MainActivity.this, Users);
-                    //listView.setAdapter(adapter);
+                        pbMain.setVisibility(View.GONE);
+                        txtError.setVisibility(View.GONE);
+                        lstOffers.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    Log.d("LOG", "RetrieveFiberFragment:onResponse error");
+                    txtError.setText(response.raw().code() + "\n" + response.raw().message().toString());
+                    pbMain.setVisibility(View.GONE);
+                    txtError.setVisibility(View.VISIBLE);
+                    lstOffers.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.d("LOG", "RetrieveFiberFragment:onFailure" + t.toString());
+                Log.d("LOG", "RetrieveFiberFragment:onFailure" + t.getMessage());
             }
         });
 
@@ -140,6 +175,14 @@ public class RetrieveFiberFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public Information getInformation() {
+        return information;
+    }
+
+    public void setInformation(Information information) {
+        this.information = information;
     }
 
     /**

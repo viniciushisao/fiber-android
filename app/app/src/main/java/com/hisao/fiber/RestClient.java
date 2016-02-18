@@ -1,8 +1,5 @@
 package com.hisao.fiber;
 
-        import android.util.Log;
-
-        import com.hisao.fiber.Models.OfferError;
         import com.hisao.fiber.Models.OfferResponse;
         import com.squareup.okhttp.Interceptor;
         import com.squareup.okhttp.OkHttpClient;
@@ -51,9 +48,16 @@ public class RestClient {
 
     public interface OfferInterface {
 
-        //  @Headers("User-Agent: Retrofit2.0Tutorial-App")
         @GET("/feed/v1/offers.json")
-        Call<OfferResponse> getOffer(@Query("q") String params);
-    }
+        Call<OfferResponse> getOffers(@Query("format") String format,
+                           @Query("appid") String appid,
+                           @Query("uid") String uid,
+                           @Query("locale") String locale,
+                           @Query("os_version") String os_version,
+                           @Query("timestamp") String timestamp,
+                           @Query("hashkey") String hashkey,
+                           @Query("google_ad_id") String google_ad_id,
+                           @Query("google_ad_id_limited_tracking_enabled") Boolean google_ad_id_limited_tracking_enabled);
+}
 }
 

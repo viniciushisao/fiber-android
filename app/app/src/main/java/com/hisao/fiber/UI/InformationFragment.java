@@ -1,10 +1,8 @@
-package com.hisao.fiber;
+package com.hisao.fiber.UI;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.Objects;
+import com.hisao.fiber.Information;
+import com.hisao.fiber.R;
 
 
 /**
@@ -125,17 +124,6 @@ public class InformationFragment extends Fragment {
                 if (error){
                     Toast.makeText(getContext(), "Check the fields!", Toast.LENGTH_LONG).show();
                 }else{
-
-
-//                    final Spinner spnFormat = (Spinner) findViewById(R.id.spnFormat);
-//                    final EditText edAppId = (EditText) findViewById(R.id.edAppId);
-//                    final EditText edUid = (EditText) findViewById(R.id.edUid);
-//                    final EditText edLocale = (EditText) findViewById(R.id.edLocale);
-//                    final EditText edOsVersion = (EditText) findViewById(R.id.edOsVersion);
-//                    final EditText edTimeStamp = (EditText) findViewById(R.id.edTimestamp);
-//                    final EditText edGoogleAdId = (EditText) findViewById(R.id.edGoogle_ad_id);
-//                    final Spinner spnGoogleAdIdLimited =
-
                     Information information = new Information();
                     information.setFormat(spnFormat.getSelectedItem().toString());
                     information.setAppid(edAppId.getText().toString());
@@ -147,7 +135,6 @@ public class InformationFragment extends Fragment {
                     information.setGoogle_ad_id_limited_tracking_enabled(Boolean.valueOf(spnGoogleAdIdLimited.getSelectedItem().toString()));
 
                     mListener.onFragmentInteraction(information);
-                    ;
                 }
             }
         });
