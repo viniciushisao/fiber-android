@@ -5,10 +5,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.hisao.fiber.Information;
+import com.hisao.fiber.Models.Information;
 import com.hisao.fiber.R;
-import com.hisao.fiber.UI.InformationFragment;
-import com.hisao.fiber.UI.RetrieveFiberFragment;
 
 public class MainActivity extends AppCompatActivity implements InformationFragment.OnFragmentInteractionListener , RetrieveFiberFragment.OnFragmentInteractionListener {
 

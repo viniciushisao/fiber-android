@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hisao.fiber.Information;
+import com.hisao.fiber.Models.Information;
 import com.hisao.fiber.Models.OfferResponse;
 import com.hisao.fiber.Models.OfferResponseOffers;
 import com.hisao.fiber.R;
@@ -111,8 +111,8 @@ public class RetrieveFiberFragment extends Fragment {
                 information.getTimestamp(),
                 information.getHashkey(),
                 information.getGoogle_ad_id(),
-                information.isGoogle_ad_id_limited_tracking_enabled()
-                );
+                information.isGoogle_ad_id_limited_tracking_enabled(),
+                null, null, null, null, null, null);
         call.enqueue(new Callback<OfferResponse>() {
             @Override
             public void onResponse(Response<OfferResponse> response) {

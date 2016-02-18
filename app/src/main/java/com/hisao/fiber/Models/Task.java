@@ -2,8 +2,6 @@ package com.hisao.fiber.Models;
 
 import android.os.AsyncTask;
 
-import com.hisao.fiber.Information;
-
 /**
  * Created by vinicius on 2/17/2016.
  */

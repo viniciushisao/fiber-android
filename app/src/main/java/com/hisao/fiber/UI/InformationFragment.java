@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.hisao.fiber.Information;
+import com.hisao.fiber.Models.Information;
 import com.hisao.fiber.R;
 
 

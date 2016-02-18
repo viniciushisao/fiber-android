@@ -1,9 +1,16 @@
-package com.hisao.fiber;
+package com.hisao.fiber.Models;
 
 import android.util.Log;
 
+import com.hisao.fiber.AeSimpleSHA1;
+import com.hisao.fiber.ApplicationConstants;
+
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+
 
 /**
  * Created by suzukivi on 15/02/2016.
@@ -93,7 +100,6 @@ public class Information {
      *  5 Hash the whole resulting string, using SHA1. The resulting hashkey is then appended to the request as a separate
      */
     public String getHashkey() {
-
         if (this.hashkey == null || this.hashkey.isEmpty()){
 
             hashkey = ApplicationConstants.APPID + "=" + getAppid() + "&" +
@@ -105,14 +111,8 @@ public class Information {
                     ApplicationConstants.TIMESTAMP + "=" + getTimestamp() + "&" +
                     ApplicationConstants.UID + "=" + getUid() + "&" +
                     ApplicationConstants.API_KEY;
+            return  new String(Hex.encodeHex(DigestUtils.sha1(hashkey)));
 
-            try {
-                hashkey = AeSimpleSHA1.SHA1(hashkey);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
         }
         return hashkey;
     }
