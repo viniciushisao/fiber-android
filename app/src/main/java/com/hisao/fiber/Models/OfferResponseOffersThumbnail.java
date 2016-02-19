@@ -1,15 +1,21 @@
 package com.hisao.fiber.Models;
 
 /**
- * Created by vinicius on 2/17/2016.
+ * Created by viniciushisao
  */
-public class OfferResponseOffersThumbnail {
 
-//    - lowres
-//    - hires
+public class OfferResponseOffersThumbnail {
 
     private String lowres;
     private String hires;
+
+    @Override
+    public String toString() {
+        return "OfferResponseOffersThumbnail{" +
+                "lowres='" + lowres + '\'' +
+                ", hires='" + hires + '\'' +
+                '}';
+    }
 
     public String getLowres() {
         return lowres;

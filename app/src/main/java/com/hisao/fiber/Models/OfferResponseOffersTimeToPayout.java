@@ -1,15 +1,21 @@
 package com.hisao.fiber.Models;
 
 /**
- * Created by viniciushisao on 17/02/2016.
+ * Created by viniciushisao
  */
-public class OfferResponseOffersTimeToPayout {
 
-//    - amount
-//    - readable
+public class OfferResponseOffersTimeToPayout {
 
     private String amount;
     private String readable;
+
+    @Override
+    public String toString() {
+        return "OfferResponseOffersTimeToPayout{" +
+                "amount='" + amount + '\'' +
+                ", readable='" + readable + '\'' +
+                '}';
+    }
 
     public String getAmount() {
         return amount;

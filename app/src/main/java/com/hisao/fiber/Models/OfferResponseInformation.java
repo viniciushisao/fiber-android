@@ -1,17 +1,10 @@
 package com.hisao.fiber.Models;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
- * Created by vinicius on 2/17/2016.
+ * Created by viniciushisao
  */
+
 public class OfferResponseInformation {
-//    - app_name
-//    - appid
-//    - virtual_currency
-//    - country
-//    - language
-//    - support_url
 
     private String app_name;
     private String appid;

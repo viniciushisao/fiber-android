@@ -1,16 +1,21 @@
 package com.hisao.fiber.Models;
 
 /**
- * Created by vinicius on 2/17/2016.
+ * Created by viniciushisao
  */
-public class OfferResponseOffersOfferTypes {
 
-//    - offer_type_id
-//    - readable
+public class OfferResponseOffersOfferTypes {
 
     private String offer_type_id;
     private String readable;
 
+    @Override
+    public String toString() {
+        return "OfferResponseOffersOfferTypes{" +
+                "offer_type_id='" + offer_type_id + '\'' +
+                ", readable='" + readable + '\'' +
+                '}';
+    }
 
     public String getOffer_type_id() {
         return offer_type_id;

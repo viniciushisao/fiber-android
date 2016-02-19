@@ -1,11 +1,16 @@
 package com.hisao.fiber.UI;
 
+/**
+ * Created by viniciushisao
+ */
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -67,6 +72,13 @@ public class InformationFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -81,49 +93,41 @@ public class InformationFragment extends Fragment {
         final Spinner spnGoogleAdIdLimited = (Spinner) inflate.findViewById(R.id.spntxtGoogle_ad_id_limited_tracking_enabled);
         Button btnRetrieve = (Button) inflate.findViewById(R.id.btnRetrieve);
 
-        //Testing
-//                appid	The Fyber Application ID for your application.	157	yes
-        edAppId.setText("157");
-//                uid	The unique User ID, as used internally in your application.	player1	yes
-        edUid.setText("player1");
-//                locale	The locale used for the offer descriptions.	de	yes
-        edLocale.setText("de");
-//                os_version	Current version of the users Operating System, retrieve via android.os.Build.VERSION.RELEASE	4.1.1	yes
-        edOsVersion.setText("4.1.1");
-//                timestamp	The time the request is being sent by the device.	1312471066	yes
-        edTimeStamp.setText("1312471066");
-//                hashkey	The hash that signs the whole request.	eff26c67f527e6817bf6 935c75f8cc5cc5cffac2	yes
-//                google_ad_id	The Google advertising ID obtained via AdvertisingIdClient.getAdvertisingIdInfo(mContext).getId();	38400000-8cf0-11bd-b23e-10b96e40000d	yes
-        edGoogleAdId.setText("38400000-8cf0-11bd-b23e-10b96e40000d");
-//                google_ad_id_limited_tracking_enabled	Retrieves whether the user has limit ad tracking enabled or not. Obtained via AdvertisingIdClient.getAdvertisingIdInfo(mContext).isLimitAdTrackingEnabled()	true or false	Yes
 
+        // ---- BEGIN MOCK
+        edAppId.setText("157");
+        edUid.setText("player1");
+        edLocale.setText("de");
+        edOsVersion.setText("4.1.1");
+        edTimeStamp.setText("1312471066");
+        edGoogleAdId.setText("38400000-8cf0-11bd-b23e-10b96e40000d");
+        // ---- END MOCK
 
         btnRetrieve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
                 boolean error = false;
 
-                if (!Information.isValidFormat(spnFormat.getSelectedItem().toString())){
+                if (!Information.isValidFormat(spnFormat.getSelectedItem().toString())) {
                     error = true;
-                }else if (!Information.isValidAppid(edAppId.getText().toString())){
+                } else if (!Information.isValidAppid(edAppId.getText().toString())) {
                     error = true;
-                }else if (!Information.isValidUid(edUid.getText().toString())){
+                } else if (!Information.isValidUid(edUid.getText().toString())) {
                     error = true;
-                }else if (!Information.isValidLocale(edLocale.getText().toString())){
+                } else if (!Information.isValidLocale(edLocale.getText().toString())) {
                     error = true;
-                }else if (!Information.isValidOs_version(edOsVersion.getText().toString())){
+                } else if (!Information.isValidOs_version(edOsVersion.getText().toString())) {
                     error = true;
-                }else if (!Information.isValidTimestamp(edTimeStamp.getText().toString())){
+                } else if (!Information.isValidTimestamp(edTimeStamp.getText().toString())) {
                     error = true;
-                }else if (!Information.isValidGoogle_ad_id(edGoogleAdId.getText().toString())){
+                } else if (!Information.isValidGoogle_ad_id(edGoogleAdId.getText().toString())) {
                     error = true;
                 }
 
-                if (error){
+                if (error) {
                     Toast.makeText(getContext(), "Check the fields!", Toast.LENGTH_LONG).show();
-                }else{
+                } else {
                     Information information = new Information();
                     information.setFormat(spnFormat.getSelectedItem().toString());
                     information.setAppid(edAppId.getText().toString());
@@ -164,7 +168,7 @@ public class InformationFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.

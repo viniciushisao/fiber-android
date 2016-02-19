@@ -1,20 +1,16 @@
 package com.hisao.fiber.Models;
 
+/**
+ * Created by viniciushisao
+ */
+
 import android.util.Log;
 
-import com.hisao.fiber.AeSimpleSHA1;
 import com.hisao.fiber.ApplicationConstants;
-
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
-
-/**
- * Created by suzukivi on 15/02/2016.
- */
 public class Information {
 
     /*
@@ -22,7 +18,7 @@ public class Information {
      */
 
     /**
-     *The response format ( lower case), selected by the ‘extension’ after ‘offers’.
+     * The response format ( lower case), selected by the ‘extension’ after ‘offers’.
      * json or xml
      */
     private String format;
@@ -46,8 +42,8 @@ public class Information {
     private String locale;
 
     /**
-     * 	Current version of the users Operating System, retrieve via android.os.Build.VERSION.RELEASE
-     * 	4.1.1
+     * Current version of the users Operating System, retrieve via android.os.Build.VERSION.RELEASE
+     * 4.1.1
      */
     private String os_version;
 
@@ -93,14 +89,14 @@ public class Information {
 
 
     /**
-     *  1 Get all request parameters and their values (except hashkey)
-     *  2 Order theses pairs alphabetically by parameter name
-     *  3 Concatenate all pairs using = between key and value and & between the pairs.
-     *  4 Concatenate the resulting string with & and the API Key handed out to you by Fyber.
-     *  5 Hash the whole resulting string, using SHA1. The resulting hashkey is then appended to the request as a separate
+     * 1 Get all request parameters and their values (except hashkey)
+     * 2 Order theses pairs alphabetically by parameter name
+     * 3 Concatenate all pairs using = between key and value and & between the pairs.
+     * 4 Concatenate the resulting string with & and the API Key handed out to you by Fyber.
+     * 5 Hash the whole resulting string, using SHA1. The resulting hashkey is then appended to the request as a separate
      */
     public String getHashkey() {
-        if (this.hashkey == null || this.hashkey.isEmpty()){
+        if (this.hashkey == null || this.hashkey.isEmpty()) {
 
             hashkey = ApplicationConstants.APPID + "=" + getAppid() + "&" +
                     ApplicationConstants.FORMAT + "=" + getFormat() + "&" +
@@ -111,11 +107,12 @@ public class Information {
                     ApplicationConstants.TIMESTAMP + "=" + getTimestamp() + "&" +
                     ApplicationConstants.UID + "=" + getUid() + "&" +
                     ApplicationConstants.API_KEY;
-            return  new String(Hex.encodeHex(DigestUtils.sha1(hashkey)));
+            return new String(Hex.encodeHex(DigestUtils.sha1(hashkey)));
 
         }
         return hashkey;
     }
+
     /**
      * Sample:
      * http://api.fyber.com/feed/v1/offers.json?appid=[APP_ID]&uid=[USER_ID]&ip=[IP_ADDRESS]&
@@ -124,7 +121,7 @@ public class Information {
      * google_ad_id_limited_tracking_enabled=[GAID ENABLED]&hashkey=[HASHKEY]
      */
 
-    public String getParams(){
+    public String getParams() {
 
         String ret = ApplicationConstants.APPID + "=" + getAppid() + "&" +
                 ApplicationConstants.FORMAT + "=" + getFormat() + "&" +
@@ -187,43 +184,44 @@ public class Information {
 
     // TODO check all the validators
 
-    public static boolean isValidFormat(String format){
+    public static boolean isValidFormat(String format) {
         if (format == null || format.isEmpty())
             return false;
         return true;
     }
 
-    public static boolean isValidAppid(String appid){
+    public static boolean isValidAppid(String appid) {
         if (appid == null || appid.isEmpty())
             return false;
         return true;
     }
 
-    public static boolean isValidUid(String uid){
+    public static boolean isValidUid(String uid) {
         if (uid == null || uid.isEmpty())
             return false;
         return true;
     }
 
-    public static boolean isValidLocale(String locale){
+    public static boolean isValidLocale(String locale) {
         if (locale == null || locale.isEmpty())
             return false;
         return true;
     }
 
-    public static boolean isValidOs_version(String os_version){
+    public static boolean isValidOs_version(String os_version) {
         if (os_version == null || os_version.isEmpty())
             return false;
         return true;
     }
+
     //TODO check the timesptamp date instead of string
-    public static boolean isValidTimestamp(String timestamp){
+    public static boolean isValidTimestamp(String timestamp) {
         if (timestamp == null || timestamp.isEmpty())
             return false;
         return true;
     }
 
-    public static boolean isValidGoogle_ad_id(String google_ad_id){
+    public static boolean isValidGoogle_ad_id(String google_ad_id) {
         if (google_ad_id == null || google_ad_id.isEmpty())
             return false;
         return true;

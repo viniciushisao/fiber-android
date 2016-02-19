@@ -1,17 +1,13 @@
 package com.hisao.fiber.Models;
 
+/**
+ * Created by viniciushisao
+ */
+
 import java.io.Serializable;
 import java.util.List;
 
 public class OfferResponse implements Serializable {
-
-//    - response (only present in XML format)
-//    - code
-//    - message
-//    - count
-//    - pages
-//    - information (class)
-//    - offers[] (class)
 
     private String code;
     private String message;
@@ -66,5 +62,17 @@ public class OfferResponse implements Serializable {
 
     public void setOffers(List<OfferResponseOffers> offers) {
         this.offers = offers;
+    }
+
+    @Override
+    public String toString() {
+        return "OfferResponse{" +
+                "code='" + code + '\'' +
+                ", message='" + message + '\'' +
+                ", count='" + count + '\'' +
+                ", pages='" + pages + '\'' +
+                ", information=" + ((information != null) ? information.toString() : null) +
+                ", offers=" + ((offers != null) ? offers.toString() : null) +
+                '}';
     }
 }

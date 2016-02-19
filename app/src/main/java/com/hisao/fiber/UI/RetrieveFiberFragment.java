@@ -1,5 +1,9 @@
 package com.hisao.fiber.UI;
 
+/**
+ * Created by viniciushisao
+ */
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,11 +16,15 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.hisao.fiber.ApplicationConstants;
 import com.hisao.fiber.Models.Information;
 import com.hisao.fiber.Models.OfferResponse;
 import com.hisao.fiber.Models.OfferResponseOffers;
 import com.hisao.fiber.R;
 import com.hisao.fiber.RestClient;
+
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +56,7 @@ public class RetrieveFiberFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private OffersAdapter offersAdapter;
+
     public RetrieveFiberFragment() {
         // Required empty public constructor
     }
@@ -85,7 +94,7 @@ public class RetrieveFiberFragment extends Fragment {
 
 
         View inflate = inflater.inflate(R.layout.fragment_retrieve_fiber, container, false);
-        final ProgressBar pbMain= (ProgressBar) inflate.findViewById(R.id.pbMain);
+        final ProgressBar pbMain = (ProgressBar) inflate.findViewById(R.id.pbMain);
         final TextView txtError = (TextView) inflate.findViewById(R.id.txtError);
         final ListView lstOffers = (ListView) inflate.findViewById(R.id.lstOffers);
 
@@ -93,15 +102,6 @@ public class RetrieveFiberFragment extends Fragment {
         txtError.setVisibility(View.GONE);
 
         RestClient.OfferInterface service = RestClient.getClient();
-//        @Query("format") String format,
-//        @Query("appid") Integer appid,
-//        @Query("uid") String uid,
-//        @Query("locale") String locale,
-//        @Query("os_version") String os_version,
-//        @Query("timestamp") Long timestamp,
-//        @Query("hashkey") String hashkey,
-//        @Query("google_ad_id") String google_ad_id,
-//        @Query("google_ad_id_limited_tracking_enabled") Boolean google_ad_id_limited_tracking_enabled);
 
         Call<OfferResponse> call = service.getOffers(information.getFormat(),
                 information.getAppid(),
@@ -116,25 +116,54 @@ public class RetrieveFiberFragment extends Fragment {
         call.enqueue(new Callback<OfferResponse>() {
             @Override
             public void onResponse(Response<OfferResponse> response) {
+
                 if (response.isSuccess()) {
                     // request successful (status code 200, 201)
                     OfferResponse result = response.body();
-                    List<OfferResponseOffers> offerResponseOffersList = new ArrayList<OfferResponseOffers>();
-                    offerResponseOffersList = result.getOffers();
+                    boolean ret = true;
 
-                    if (offerResponseOffersList.size() == 0){
-                        txtError.setText("NOTHING TO SHOW");
+                    try {
+                        //TODO convert this call to return response instead OfferResponse
+                        String toHash = response.raw().body() + ApplicationConstants.API_KEY;
+                        String sha1 = new String(Hex.encodeHex(DigestUtils.sha1(toHash)));
+                        ret = response.headers().get(ApplicationConstants.HASH_KEY).equals(sha1);
+                    } catch (Exception e) {
+                        Log.d("LOG", "RetrieveFiberFragment:onResponse " + e.getMessage());
+                    }
+
+                    if (ret) {
+                        //valid hash key return
+                        List<OfferResponseOffers> offerResponseOffersList = new ArrayList<OfferResponseOffers>();
+                        offerResponseOffersList = result.getOffers();
+                        //-----BEGIN TEST
+//                        for (int i = 0; i < 10 ; i++){
+//                            OfferResponseOffers o = new OfferResponseOffers();
+//                            o.setOffer_id(Integer.toString(i));
+//                            offerResponseOffersList.add(o);
+//                        }
+                        //-----END TEST
+
+                        if (offerResponseOffersList.size() == 0) {
+                            txtError.setText("No offers");
+                            pbMain.setVisibility(View.GONE);
+                            txtError.setVisibility(View.VISIBLE);
+                            lstOffers.setVisibility(View.GONE);
+                        } else {
+                            offersAdapter = new OffersAdapter(offerResponseOffersList, getContext());
+                            lstOffers.setAdapter(offersAdapter);
+                            pbMain.setVisibility(View.GONE);
+                            txtError.setVisibility(View.GONE);
+                            lstOffers.setVisibility(View.VISIBLE);
+                        }
+
+                    } else {
+                        txtError.setText("Returned Hash not valid");
                         pbMain.setVisibility(View.GONE);
                         txtError.setVisibility(View.VISIBLE);
                         lstOffers.setVisibility(View.GONE);
-                    }else {
-                        offersAdapter = new OffersAdapter(offerResponseOffersList, getContext());
-                        lstOffers.setAdapter(offersAdapter);
-
-                        pbMain.setVisibility(View.GONE);
-                        txtError.setVisibility(View.GONE);
-                        lstOffers.setVisibility(View.VISIBLE);
                     }
+
+
                 } else {
                     txtError.setText(response.raw().code() + "\n" + response.raw().message().toString());
                     pbMain.setVisibility(View.GONE);
@@ -190,7 +219,7 @@ public class RetrieveFiberFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.

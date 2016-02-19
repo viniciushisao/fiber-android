@@ -1,7 +1,7 @@
 package com.hisao.fiber;
 
 /**
- * Created by vinicius on 2/17/2016.
+ * Created by viniciushisao
  */
 
         import com.squareup.okhttp.MediaType;
