@@ -48,6 +48,8 @@ public class RetrieveFiberFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    public static final String TAG = "RETRIEVEFIBER_FRAGMENT";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -120,21 +122,12 @@ public class RetrieveFiberFragment extends Fragment {
                 if (response.isSuccess()) {
                     // request successful (status code 200, 201)
                     OfferResponse result = response.body();
-                    boolean ret = true;
 
-                    try {
-                        //TODO convert this call to return response instead OfferResponse
-                        String toHash = response.raw().body() + ApplicationConstants.API_KEY;
-                        String sha1 = new String(Hex.encodeHex(DigestUtils.sha1(toHash)));
-                        ret = response.headers().get(ApplicationConstants.HASH_KEY).equals(sha1);
-                    } catch (Exception e) {
-                        Log.d("LOG", "RetrieveFiberFragment:onResponse " + e.getMessage());
-                    }
-
-                    if (ret) {
-                        //valid hash key return
+                    if (RestClient.isHashValid()) {
+                        //valid hash key
                         List<OfferResponseOffers> offerResponseOffersList = new ArrayList<OfferResponseOffers>();
                         offerResponseOffersList = result.getOffers();
+
                         //-----BEGIN TEST
 //                        for (int i = 0; i < 10 ; i++){
 //                            OfferResponseOffers o = new OfferResponseOffers();

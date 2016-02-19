@@ -9,6 +9,9 @@ import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Response;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.io.IOException;
 
 import retrofit.Call;
@@ -21,6 +24,22 @@ public class RestClient {
 
     private static OfferInterface offerInterface;
 
+    private static void validateHash(Response response){
+
+        if (response != null && response.isSuccessful() && response.body() != null){
+            String hash = response.header(ApplicationConstants.HASH_KEY);
+            String toHash = response.body().toString() + ApplicationConstants.API_KEY;
+            String sha1 = new String(Hex.encodeHex(DigestUtils.sha1(toHash)));
+            isHashValid = hash.equals(sha1);
+        }
+    }
+
+    //TODO it is working but it is ugly. Fix it.
+    public static boolean isHashValid = false;
+    public static boolean isHashValid(){
+        return isHashValid;
+    }
+
     public static OfferInterface getClient() {
         if (offerInterface == null) {
 
@@ -29,6 +48,7 @@ public class RestClient {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Response response = chain.proceed(chain.request());
+                    validateHash(response);
                     return response;
                 }
             });
