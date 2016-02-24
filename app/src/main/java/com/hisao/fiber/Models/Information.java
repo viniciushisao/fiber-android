@@ -203,7 +203,7 @@ public class Information {
     }
 
     public static boolean isValidLocale(String locale) {
-        if (locale == null || locale.isEmpty())
+        if (locale == null || locale.isEmpty() || locale.length() > 2)
             return false;
         return true;
     }

@@ -4,13 +4,10 @@ package com.hisao.fiber.UI;
  * Created by viniciushisao
  */
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.hisao.fiber.Models.Information;
 import com.hisao.fiber.R;

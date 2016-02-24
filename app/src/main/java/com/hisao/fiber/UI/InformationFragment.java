@@ -97,12 +97,12 @@ public class InformationFragment extends Fragment {
 
 
         // ---- BEGIN MOCK
-        edAppId.setText("157");
-        edUid.setText("player1");
-        edLocale.setText("de");
-        edOsVersion.setText("4.1.1");
-        edTimeStamp.setText("1312471066");
-        edGoogleAdId.setText("38400000-8cf0-11bd-b23e-10b96e40000d");
+//        edAppId.setText("157");
+//        edUid.setText("player1");
+//        edLocale.setText("de");
+//        edOsVersion.setText("4.1.1");
+//        edTimeStamp.setText("1312471066");
+//        edGoogleAdId.setText("38400000-8cf0-11bd-b23e-10b96e40000d");
         // ---- END MOCK
 
         btnRetrieve.setOnClickListener(new View.OnClickListener() {
